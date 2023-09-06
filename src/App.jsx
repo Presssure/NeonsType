@@ -1,16 +1,17 @@
 // import React from 'react';
-import neon from './assets/neon2.webp';
+// import neon from "./assets/neon2.webp";
+import styles from "./App.module.css";
+import Nav from "./Nav/Nav";
+import Landing from "./Landing/Landing";
 
-const App =()=>{
-
-    return(
-        <div>
-            <h1>Wassup</h1>
-            <img src={neon}/>
-        </div>
-        
-    )
-    
-}
+const App = () => {
+  return (
+    <div className={`${styles.app}`}>
+      <Nav />
+      <Landing />
+      {/* <img src={neon} /> */}
+    </div>
+  );
+};
 
 export default App;
