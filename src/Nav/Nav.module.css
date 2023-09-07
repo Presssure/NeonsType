@@ -1,6 +1,6 @@
 .navContainer{
     display:flex;
-    height:72px;
+    height:62px;
     align-items:center;
     background:#1d2020;
     margin:0;
@@ -27,12 +27,12 @@
 
 .logo{
     margin-left:20px;
-    height:70px
+    height:65px
 }
 
 .logoText{
     font-family: "Bangers", cursive;
-    font-size:60px;
+    font-size:55px;
     letter-spacing:1px;
     margin:0 10px;
     color: #e7e6e7;
