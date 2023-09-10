@@ -48,29 +48,36 @@ class App extends React.Component {
     this.setState({ testInfo: testInfo });
   }
 
-  // needs to be arrow function as arrow functions are have the same scope as the parent scope 
+  // needs to be arrow function as arrow functions are have the same scope as the parent scope
   // whereas a normal function's scope is defined on run time and will have the scope of the instance that called it(TypingChallenge??)
 
-  handleUserInput=(input)=>{
+  handleUserInput = (input) => {
     console.log(input);
     console.log(this.state.timerStarted);
-    if(!this.state.timerStarted){
+    if (!this.state.timerStarted) {
       this.startTimer();
     }
-  }
+  };
 
-  startTimer=()=>{
-    this.setState({timerStarted:true});
-    const timer=setInterval(()=>{
-      if(this.state.timeRemaining>0){
-        this.setState({timeRemaining:this.state.timeRemaining-1})
-      }
-      else{
+  startTimer = () => {
+    this.setState({ timerStarted: true });
+    const timer = setInterval(() => {
+      if (this.state.timeRemaining > 0) {
+        // WPM
+        const timeSpent = TotalTime - this.state.timeRemaining;
+        const wpm =
+          timeSpent > 0 ? (this.state.words / timeSpent) * TotalTime : 0;
+
+        this.setState({
+          timeRemaining: this.state.timeRemaining - 1,
+          wpm: parseInt(wpm),
+        });
+      } else {
         clearInterval(timer);
       }
-    },1000)
-  }
-  
+    }, 1000);
+  };
+
   render() {
     // console.log(this.state.timerStarted);
     return (
