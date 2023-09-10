@@ -10,6 +10,7 @@ const TestContainer = ({
   timeRemaining,
   timerStarted,
   testInfo,
+  onInputChange
 }) => {
   // const timeRemaining = 30;
   return (
@@ -24,6 +25,7 @@ const TestContainer = ({
             wpm={wpm}
             timeRemaining={timeRemaining}
             testInfo={testInfo}
+            onInputChange={onInputChange}
           />
         </div>
       ) : (

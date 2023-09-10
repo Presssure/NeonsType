@@ -2,10 +2,10 @@ import styles from "./TypingChallenge.module.css";
 import TestLetter from "./../TestLetter/TestLetter";
 
 const TypingChallenge = ({
-  selectedParagraph,
   timeRemaining,
   timerStarted,
   testInfo,
+  onInputChange
 }) => {
   return (
     <div className={styles.typingChallenge}>
@@ -22,14 +22,15 @@ const TypingChallenge = ({
         <div className={styles.textAreaLeft}>
           <div className={`${styles.textArea} ${styles.testParagraph}`}>
             {/* {selectedParagraph} */}
-            {testInfo.map((individualLetterInfo) => {
-              return <TestLetter individualLetterInfo={individualLetterInfo} />;
+            {testInfo.map((individualLetterInfo, index) => {
+              return <TestLetter key={index} individualLetterInfo={individualLetterInfo} />;
             })}
           </div>
         </div>
 
         <div className={styles.textAreaRight}>
           <textarea
+            onChange={(event)=>onInputChange(event.target.value)}
             className={styles.textArea}
             placeholder="Start typing here"
           ></textarea>

@@ -22,7 +22,6 @@ class App extends React.Component {
 
   state = {
     selectedParagraph: "Hello World!",
-    testInfo: [],
     timerStarted: false,
     timeRemaining: TotalTime,
     words: 0,
@@ -49,7 +48,31 @@ class App extends React.Component {
     this.setState({ testInfo: testInfo });
   }
 
+  // needs to be arrow function as arrow functions are have the same scope as the parent scope 
+  // whereas a normal function's scope is defined on run time and will have the scope of the instance that called it(TypingChallenge??)
+
+  handleUserInput=(input)=>{
+    console.log(input);
+    console.log(this.state.timerStarted);
+    if(!this.state.timerStarted){
+      this.startTimer();
+    }
+  }
+
+  startTimer=()=>{
+    this.setState({timerStarted:true});
+    const timer=setInterval(()=>{
+      if(this.state.timeRemaining>0){
+        this.setState({timeRemaining:this.state.timeRemaining-1})
+      }
+      else{
+        clearInterval(timer);
+      }
+    },1000)
+  }
+  
   render() {
+    // console.log(this.state.timerStarted);
     return (
       <div className={`${styles.app}`}>
         <Nav />
@@ -62,6 +85,7 @@ class App extends React.Component {
           timeRemaining={this.state.timeRemaining}
           timerStarted={this.state.timerStarted}
           testInfo={this.state.testInfo}
+          onInputChange={this.handleUserInput}
         />
         <Footer />
       </div>
