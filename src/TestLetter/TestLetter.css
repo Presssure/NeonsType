@@ -1,0 +1,17 @@
+
+.testLetter{
+    font-size:19px;
+    line-height:19px;
+}
+
+.testLetterCorrect{
+    color:#558b2f;
+}
+
+.testLetterIncorrect{
+    color:#bf360c;
+}
+
+.testLetterNotAttempted{
+    color:#f9a825;
+}
