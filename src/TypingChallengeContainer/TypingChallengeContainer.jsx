@@ -10,9 +10,8 @@ const TypingChallengeContainer = ({
   timeRemaining,
   timerStarted,
   testInfo,
-  onInputChange
+  onInputChange,
 }) => {
-
   return (
     <div className={styles.typingChallengeContainer}>
       <div className={styles.detailsContainer}>

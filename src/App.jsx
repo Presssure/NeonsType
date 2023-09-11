@@ -5,10 +5,21 @@ import Nav from "./Nav/Nav";
 import Landing from "./Landing/Landing";
 import Footer from "./Footer/Footer";
 import ChallengeSection from "./ChallengeSection/ChallengeSection";
+import { SAMPLE_PARAGRAPHS } from "./data/sampleParagraphs";
 
-const TotalTime = 60;
+const TotalTime = 2;
 
 const url = "http://metaphorpsum.com/paragraphs/1/9";
+
+const DefaultState = {
+  selectedParagraph: "",
+  timerStarted: false,
+  timeRemaining: TotalTime,
+  words: 0,
+  characters: 0,
+  wpm: 0,
+  testInfo: [],
+};
 
 class App extends React.Component {
   // const [selectedParagraph, setSelectedParagraph] = useState(
@@ -20,24 +31,15 @@ class App extends React.Component {
   // const [characters, setCharacters] = useState(0);
   // const [wpm, setWpm] = useState(0);
 
-  state = {
-    selectedParagraph: "Hello World!",
-    timerStarted: false,
-    timeRemaining: TotalTime,
-    words: 0,
-    characters: 0,
-    wpm: 0,
-    testInfo: [],
-  };
+  state = DefaultState;
 
-  componentDidMount() {
-    // fetch(url)
-    //   .then((response) => response.text())
-    //   .then((data) => {
-    //     this.setState({ selectedParagraph: data });
-    //   });
+  fetchNewParagraphFallback = () => {
+    const data =
+      SAMPLE_PARAGRAPHS[Math.floor(Math.random() * SAMPLE_PARAGRAPHS.length)];
 
-    const selectedParagraphArray = this.state.selectedParagraph.split("");
+    this.setState({ selectedParagraph: data });
+
+    const selectedParagraphArray = data.split("");
     const testInfo = selectedParagraphArray.map((selectedLetter) => {
       return {
         testLetter: selectedLetter,
@@ -45,29 +47,66 @@ class App extends React.Component {
       };
     });
 
-    this.setState({ testInfo: testInfo });
+    this.setState({
+      ...DefaultState,
+      testInfo: testInfo,
+      selectedParagraph: data,
+    });
+  };
+
+  fetchNewParagraph = () => {
+    fetch(url)
+      .then((response) => response.text())
+      .then((data) => {
+        this.setState({ selectedParagraph: data });
+
+        const selectedParagraphArray = data.split("");
+        const testInfo = selectedParagraphArray.map((selectedLetter) => {
+          return {
+            testLetter: selectedLetter,
+            status: "notAttempted",
+          };
+        });
+
+        this.setState({
+          ...DefaultState,
+          testInfo: testInfo,
+          selectedParagraph: data,
+        });
+      });
+  };
+
+  componentDidMount() {
+    this.grabParagraph();
   }
+
+  grabParagraph = () => {
+    if (this.fetchNewParagraph()) {
+    } else {
+      this.fetchNewParagraphFallback();
+    }
+  };
+
+  startAgain = () => this.grabParagraph();
 
   // needs to be arrow function as arrow functions are have the same scope as the parent scope
   // whereas a normal function's scope is defined on run time and will have the scope of the instance that called it(TypingChallenge??)
-
   handleUserInput = (input) => {
-
     /**
-         * 1. Handle the underflow case - all characters should be shown as not-attempted
-         * 2. Handle the overflow case - early exit
-         * 3. Handle the backspace case
-         *      - Mark the [index+1] element as notAttempted
-         *        (irrespective of whether the index is less than zero)
-         *      - But, don't forget to check for the overflow here
-         *        (index + 1 -> out of bound, when index === length-1)
-         * 4. Update the status in test info
-         *      1. Find out the last character in the inputValue and it's index
-         *      2. Check if the character at same index in testInfo (state) matches
-         *      3. Yes -> Correct
-         *         No  -> Incorrect (Mistake++)
-         * 5. Irrespective of the case, characters, words and wpm can be updated
-         */
+     * 1. Handle the underflow case - all characters should be shown as not-attempted
+     * 2. Handle the overflow case - early exit
+     * 3. Handle the backspace case
+     *      - Mark the [index+1] element as notAttempted
+     *        (irrespective of whether the index is less than zero)
+     *      - But, don't forget to check for the overflow here
+     *        (index + 1 -> out of bound, when index === length-1)
+     * 4. Update the status in test info
+     *      1. Find out the last character in the inputValue and it's index
+     *      2. Check if the character at same index in testInfo (state) matches
+     *      3. Yes -> Correct
+     *         No  -> Incorrect (Mistake++)
+     * 5. Irrespective of the case, characters, words and wpm can be updated
+     */
 
     const characters = input.length;
     const words = input.split(" ").length;
@@ -75,47 +114,52 @@ class App extends React.Component {
 
     // TODO handle an edge case where yuo highlight the word and delete the entire word or words
 
-    // underflow only handling back spaces as of now
-    if(index<0){
-      this.setState({testInfo:[{testLetter:this.state.testInfo[0].testLetter, status:"notAttempted"},
-        ...this.state.testInfo.splice(1)],characters,words})
+    // underflow
+    if (index < 0) {
+      this.setState({
+        testInfo: [
+          {
+            testLetter: this.state.testInfo[0].testLetter,
+            status: "notAttempted",
+          },
+          ...this.state.testInfo.splice(1),
+        ],
+        characters,
+        words,
+      });
 
-        return;
+      return;
     }
-    
+
     // overflow
-    if(index>= this.state.selectedParagraph.length){
-      this.setState({characters, words});
+    if (index >= this.state.selectedParagraph.length) {
+      this.setState({ characters, words });
       return;
     }
 
     // Make a copy of testInfo
-
     // Handles back spaces
-    const testInfo =this.state.testInfo;
-    if(!index === this.state.selectedParagraph.length-1){
-      testInfo[index+1].status="notAttempted";
+    const testInfo = this.state.testInfo;
+    if (index !== this.state.selectedParagraph.length - 1) {
+      testInfo[index + 1].status = "notAttempted";
     }
 
     // check for the correct type letters
-    const isCorrect=input[index]===testInfo[index].testLetter;
+    const isCorrect = input[index] === testInfo[index].testLetter;
 
     // update testInfo
-    testInfo[index].status=isCorrect ? "correct":"incorrect"
+    testInfo[index].status = isCorrect ? "correct" : "incorrect";
 
     // update the state
     this.setState({
       testInfo,
       words,
-      characters
-    })
-
+      characters,
+    });
 
     if (!this.state.timerStarted) {
       this.startTimer();
     }
-
-
   };
 
   startTimer = () => {
@@ -152,6 +196,7 @@ class App extends React.Component {
           timerStarted={this.state.timerStarted}
           testInfo={this.state.testInfo}
           onInputChange={this.handleUserInput}
+          startAgain={this.startAgain}
         />
         <Footer />
       </div>

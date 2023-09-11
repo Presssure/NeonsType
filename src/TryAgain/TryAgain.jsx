@@ -1,6 +1,6 @@
 import styles from "./TryAgain.module.css";
 
-const TestContainer = ({ words, characters, wpm }) => {
+const TestContainer = ({ words, characters, wpm, startAgain }) => {
   return (
     <div className={styles.tryAgainContainer}>
       <h1>Test Results</h1>
@@ -18,7 +18,10 @@ const TestContainer = ({ words, characters, wpm }) => {
         </p>
       </div>
       <div>
-        <button className={`${styles.endBtn} ${styles.startAgainBtn}`}>
+        <button
+          onClick={() => startAgain()}
+          className={`${styles.endBtn} ${styles.startAgainBtn}`}
+        >
           Re-Try
         </button>
         <button
