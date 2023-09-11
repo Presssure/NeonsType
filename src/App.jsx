@@ -91,6 +91,7 @@ class App extends React.Component {
 
     // Make a copy of testInfo
 
+    // Handles back spaces
     const testInfo =this.state.testInfo;
     if(!index === this.state.selectedParagraph.length-1){
       testInfo[index+1].status="notAttempted";
