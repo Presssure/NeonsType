@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/NeonsType/static/css/main.6d25a126.css",
+    "main.js": "/NeonsType/static/js/main.69b81d61.js",
+    "static/media/neon1.png": "/NeonsType/static/media/neon1.7a498916f2992537cd3e.png",
+    "static/media/neon-anya.webp": "/NeonsType/static/media/neon-anya.e277b3a91e0fcaa708ae.webp",
+    "index.html": "/NeonsType/index.html",
+    "main.6d25a126.css.map": "/NeonsType/static/css/main.6d25a126.css.map",
+    "main.69b81d61.js.map": "/NeonsType/static/js/main.69b81d61.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6d25a126.css",
+    "static/js/main.69b81d61.js"
+  ]
+}
