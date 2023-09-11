@@ -2,7 +2,7 @@
   "name": "neons-type",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://presssure.github.io/NeonsType/",
+  "homepage":"https://presssure.com/NeonsType/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
