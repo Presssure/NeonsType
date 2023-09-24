@@ -7,9 +7,9 @@ import Footer from "./Footer/Footer";
 import ChallengeSection from "./ChallengeSection/ChallengeSection";
 import { SAMPLE_PARAGRAPHS } from "./data/sampleParagraphs";
 
-const TotalTime = 2;
+const TotalTime = 60;
 
-const url = "http://metaphorpsum.com/paragraphs/1/9";
+const url = "http://metaphorpsum.com/paragraphs/2/9";
 
 const DefaultState = {
   selectedParagraph: "",
@@ -19,6 +19,7 @@ const DefaultState = {
   characters: 0,
   wpm: 0,
   testInfo: [],
+  finished: false,
 };
 
 class App extends React.Component {
@@ -112,6 +113,10 @@ class App extends React.Component {
     const words = input.split(" ").length;
     const index = characters - 1;
 
+    if (index + 1 === this.testInfo.length) {
+      this.setState({ finished: true });
+    }
+
     // TODO handle an edge case where yuo highlight the word and delete the entire word or words
 
     // underflow
@@ -197,6 +202,7 @@ class App extends React.Component {
           testInfo={this.state.testInfo}
           onInputChange={this.handleUserInput}
           startAgain={this.startAgain}
+          finished={this.state.finished}
         />
         <Footer />
       </div>
