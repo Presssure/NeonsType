@@ -15,9 +15,10 @@ const TestContainer = ({
   finished,
 }) => {
   // const timeRemaining = 30;
+  console.log(finished);
   return (
     <div className={styles.testContainer}>
-      {timeRemaining || finished > 0 ? (
+      {!finished ? (
         <div data-aos="fade-up" className={styles.typingChallengeContainer}>
           <TypingChallengeContainer
             selectedParagraph={selectedParagraph}

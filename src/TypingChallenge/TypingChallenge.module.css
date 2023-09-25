@@ -70,3 +70,10 @@
     background:#e9e7e4;
     padding:12px;
 }
+
+
+@media only screen and (max-width: 640px){
+    .textAreaContainer{
+        width:90%;
+    }
+}

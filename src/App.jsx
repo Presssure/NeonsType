@@ -7,9 +7,9 @@ import Footer from "./Footer/Footer";
 import ChallengeSection from "./ChallengeSection/ChallengeSection";
 import { SAMPLE_PARAGRAPHS } from "./data/sampleParagraphs";
 
-const TotalTime = 60;
+const TotalTime = 20;
 
-const url = "http://metaphorpsum.com/paragraphs/2/9";
+const url = "http://metaphorpsum.com/paragraphs/1/1";
 
 const DefaultState = {
   selectedParagraph: "",
@@ -88,7 +88,10 @@ class App extends React.Component {
     }
   };
 
-  startAgain = () => this.grabParagraph();
+  startAgain = () => {
+    this.grabParagraph();
+    this.setState({ finished: false });
+  };
 
   // needs to be arrow function as arrow functions are have the same scope as the parent scope
   // whereas a normal function's scope is defined on run time and will have the scope of the instance that called it(TypingChallenge??)
@@ -113,7 +116,7 @@ class App extends React.Component {
     const words = input.split(" ").length;
     const index = characters - 1;
 
-    if (index + 1 === this.testInfo.length) {
+    if (characters === this.state.testInfo.length) {
       this.setState({ finished: true });
     }
 
