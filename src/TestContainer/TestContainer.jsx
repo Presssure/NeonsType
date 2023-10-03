@@ -14,8 +14,6 @@ const TestContainer = ({
   startAgain,
   finished,
 }) => {
-  // const timeRemaining = 30;
-  console.log(finished);
   return (
     <div className={styles.testContainer}>
       {!finished ? (

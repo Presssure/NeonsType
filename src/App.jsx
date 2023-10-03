@@ -7,7 +7,7 @@ import Footer from "./Footer/Footer";
 import ChallengeSection from "./ChallengeSection/ChallengeSection";
 import { SAMPLE_PARAGRAPHS } from "./data/sampleParagraphs";
 
-const TotalTime = 20;
+const TotalTime = 60;
 
 const url = "http://metaphorpsum.com/paragraphs/1/1";
 
@@ -116,8 +116,12 @@ class App extends React.Component {
     const words = input.split(" ").length;
     const index = characters - 1;
 
+
+    
+
     if (characters === this.state.testInfo.length) {
       this.setState({ finished: true });
+      clearInterval(this.timer);
     }
 
     // TODO handle an edge case where yuo highlight the word and delete the entire word or words
@@ -152,6 +156,11 @@ class App extends React.Component {
       testInfo[index + 1].status = "notAttempted";
     }
 
+    console.log("Characters:   "+this.state.testInfo[1].testLetter);
+    console.log("Selected Paragraph:    "+this.state.selectedParagraph);
+
+
+
     // check for the correct type letters
     const isCorrect = input[index] === testInfo[index].testLetter;
 
@@ -172,7 +181,7 @@ class App extends React.Component {
 
   startTimer = () => {
     this.setState({ timerStarted: true });
-    const timer = setInterval(() => {
+    this.timer = setInterval(() => {
       if (this.state.timeRemaining > 0) {
         // WPM
         const timeSpent = TotalTime - this.state.timeRemaining;
@@ -184,7 +193,8 @@ class App extends React.Component {
           wpm: parseInt(wpm),
         });
       } else {
-        clearInterval(timer);
+        this.setState({finished:true})
+        clearInterval(this.timer);
       }
     }, 1000);
   };

@@ -2,7 +2,7 @@ import styles from "./TryAgain.module.css";
 
 const TestContainer = ({ words, characters, wpm, startAgain }) => {
   return (
-    <div className={styles.tryAgainContainer}>
+    <div data-aos="fade-up" className={styles.tryAgainContainer}>
       <h1>Test Results</h1>
       <div className={styles.resultsContainer}>
         <p>
@@ -28,7 +28,7 @@ const TestContainer = ({ words, characters, wpm, startAgain }) => {
           className={`${styles.endBtn} ${styles.shareBtn}`}
           onClick={() => {
             window.open(
-              "https://www.facebook.com/sharer/sharer.php?u=theleanprogrammer.com/aam",
+              "https://www.facebook.com/sharer/sharer.php?u=https://presssure.github.io/NeonsType/",
               "facebook-share-dialog",
               "width=800,height=600"
             );
@@ -40,7 +40,7 @@ const TestContainer = ({ words, characters, wpm, startAgain }) => {
           className={`${styles.endBtn} ${styles.tweetBtn}`}
           onClick={() => {
             window.open(
-              "https://twitter.com/intent/tweet?text=theleanprogrammer.com",
+              "https://twitter.com/intent/tweet?text=https://presssure.github.io/NeonsType/",
               "Twitter",
               "width=800,height=600"
             );
