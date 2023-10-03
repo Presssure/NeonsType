@@ -9,7 +9,7 @@ import { SAMPLE_PARAGRAPHS } from "./data/sampleParagraphs";
 
 const TotalTime = 60;
 
-const url = "http://metaphorpsum.com/paragraphs/1/1";
+const url = "http://metaphorpsum.com/paragraphs/2/10";
 
 const DefaultState = {
   selectedParagraph: "",
