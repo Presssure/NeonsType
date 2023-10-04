@@ -20,6 +20,7 @@ const DefaultState = {
   wpm: 0,
   testInfo: [],
   finished: false,
+  recent:0
 };
 
 class App extends React.Component {
@@ -118,13 +119,24 @@ class App extends React.Component {
 
 
     
-
+    // check if finished
     if (characters === this.state.testInfo.length) {
       this.setState({ finished: true });
       clearInterval(this.timer);
     }
 
+
+
     // TODO handle an edge case where yuo highlight the word and delete the entire word or words
+    
+    
+    // console.log("Characters:   "+this.state.testInfo[1].testLetter);
+    // console.log("Selected Paragraph:    "+this.state.selectedParagraph);
+    // console.log(input.length);
+    // if(this.state.testInfo[inputlength])
+
+
+
 
     // underflow
     if (index < 0) {
@@ -151,13 +163,18 @@ class App extends React.Component {
 
     // Make a copy of testInfo
     // Handles back spaces
+
+    console.log("Index:  "+index);
+    console.log("Para:   "+this.state.testInfo[index].status);
+    console.log(" ");
     const testInfo = this.state.testInfo;
-    if (index !== this.state.selectedParagraph.length - 1) {
+    if (index !== this.state.selectedParagraph.length-1) {
       testInfo[index + 1].status = "notAttempted";
     }
+    // if(testInfo[index].status!==correct
 
-    console.log("Characters:   "+this.state.testInfo[1].testLetter);
-    console.log("Selected Paragraph:    "+this.state.selectedParagraph);
+    
+
 
 
 
@@ -169,9 +186,9 @@ class App extends React.Component {
 
     // update the state
     this.setState({
-      testInfo,
-      words,
-      characters,
+      testInfo:testInfo,
+      words:words,
+      characters:characters,
     });
 
     if (!this.state.timerStarted) {
