@@ -20,7 +20,7 @@ const DefaultState = {
   wpm: 0,
   testInfo: [],
   finished: false,
-  recent:0
+  highest:0
 };
 
 class App extends React.Component {
@@ -118,6 +118,9 @@ class App extends React.Component {
     const index = characters - 1;
 
 
+    if(index>this.state.highest){
+      this.setState({highest:index});
+    }
     
     // check if finished
     if (characters === this.state.testInfo.length) {
@@ -161,20 +164,21 @@ class App extends React.Component {
       return;
     }
 
-    // Make a copy of testInfo
-    // Handles back spaces
-
-    console.log("Index:  "+index);
-    console.log("Para:   "+this.state.testInfo[index].status);
-    console.log(" ");
-    const testInfo = this.state.testInfo;
-    if (index !== this.state.selectedParagraph.length-1) {
-      testInfo[index + 1].status = "notAttempted";
-    }
-    // if(testInfo[index].status!==correct
+   
 
     
+    const testInfo = this.state.testInfo;
 
+     // Make a copy of testInfo
+    
+     // Handles back spaces
+
+    // if (index !== this.state.selectedParagraph.length-1) {
+    //   testInfo[index + 1].status = "notAttempted";
+    // }
+    for(var i=index; i<=this.state.highest;i++){
+      testInfo[i+1].status="notAttempted"
+    }
 
 
 
@@ -183,6 +187,8 @@ class App extends React.Component {
 
     // update testInfo
     testInfo[index].status = isCorrect ? "correct" : "incorrect";
+
+    
 
     // update the state
     this.setState({
